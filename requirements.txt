@@ -48,5 +48,5 @@ tzdata==2025.3
 ujson==5.11.0
 urllib3==2.6.3
 zope.interface==8.2
-dj-database-url
-psycopg2-binary
+#dj-database-url
+#psycopg2-binary
