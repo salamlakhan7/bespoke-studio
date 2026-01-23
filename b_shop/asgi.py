@@ -9,7 +9,8 @@ https://docs.djangoproject.com/en/5.2/howto/deployment/asgi/
 """
 ASGI config for b_shop project.
 It exposes the ASGI callable as a module-level variable named ``application``.
-"""import os
+"""
+import os
 import django # Add this import
 from django.core.asgi import get_asgi_application
 
