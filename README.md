@@ -1,14 +1,20 @@
 
-# 🛋️ Bespoke Studio  
-### AI-Powered Artisan Furniture Marketplace
+---
+
+# 🛋️ Bespoke Studio - AI-Powered Artisan Furniture Marketplace
 
 <div align="center">
 
-**A premium full-stack platform where customers generate custom furniture designs using AI and negotiate directly with artisans in real time.**
+![Python](https://img.shields.io/badge/Python-3.x-yellow?style=for-the-badge\&logo=python)
+![Django](https://img.shields.io/badge/Django-5.2.8-green?style=for-the-badge\&logo=django)
+![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-3.x-teal?style=for-the-badge\&logo=tailwind-css)
+![Redis](https://img.shields.io/badge/Redis-learning-orange?style=for-the-badge\&logo=redis)
+![Pollinations AI](https://img.shields.io/badge/Pollinations_AI-lightgrey?style=for-the-badge)
+![License](https://img.shields.io/badge/License-MIT-red?style=for-the-badge)
 
-🚀 Built with Django • 🎨 AI-driven design • 💬 Real-time negotiation
+**A high-end, full-stack marketplace enabling customers to generate custom furniture designs using AI and negotiate directly with artisans through real-time communication.**
 
-[✨ Features](#-features) • [🚀 Quick Start](#-quick-start) • [📖 Usage](#-usage-guide) • [🛠 Tech Stack](#-tech-stack) • [📁 Structure](#-project-structure)
+[Features](#-features) • [Installation](#-installation) • [Usage](#-usage) • [Tech Stack](#-tech-stack) • [Project Structure](#-project-structure)
 
 </div>
 
@@ -16,195 +22,202 @@
 
 ## 🌟 Features
 
-### 🧑‍💻 For Customers
+### For Customers
 
-- 🎨 **AI Design Studio**  
-  Generate custom furniture concepts using AI image models directly from the dashboard.
-- 🏺 **Curated Showroom**  
-  Browse a premium collection of ready-to-order handcrafted furniture.
-- 💾 **Design Vault**  
-  Save AI-generated concepts for comparison and future reference.
-- 💬 **Live Negotiation**  
-  Start real-time chats with artisans linked to specific products or designs.
-- 🔗 **Shareable Designs**  
-  Share unique item or design links with others.
+* 🎨 **AI Design Studio** - Generate high-fidelity furniture concepts using Flux AI models
+* 🏺 **Showroom Access** - Browse a premium collection of handcrafted inventory
+* 💾 **Design Vault** - Save AI-generated designs to your personal gallery
+* 💬 **Smart Negotiation** - Chat with artisans with contextual references
+* 🔗 **Shareable Links** - Share designs or products easily
 
----
+### For Artisans (Owners)
 
-### 🧑‍🎨 For Artisans (Owners)
+* 📢 **Inventory Management** - Add new furniture items with images, descriptions, and pricing
+* 👥 **Command Center** - Monitor live customer negotiations
+* ✅ **Availability Toggle** - Mark stock as “In Stock” or “Sold Out” in real-time
+* 💬 **Contextual Chat** - See which product a customer is discussing
+* 📈 **Studio Analytics** - Track inventory and live negotiations
 
-- 📦 **Inventory Management**  
-  Upload furniture items with images, pricing, and availability.
-- 🧭 **Command Center Dashboard**  
-  Monitor active negotiations and customer requests in real time.
-- 🔄 **Stock Control**  
-  Toggle availability status instantly.
-- 🧾 **Context-Aware Chat**  
-  Each chat includes a reference card showing the exact product or design.
-- 📊 **Studio Insights**  
-  Track active listings and live customer interactions.
+### Platform Features
 
----
-
-### ⚙️ Platform Capabilities
-
-- 🔐 **Role-Based Access Control**  
-  Separate dashboards for customers and artisans.
-- ⚡ **WebSocket-Powered Chat**  
-  Instant message updates without page reloads.
-- 🎨 **Glassmorphism UI**  
-  Modern dark UI with smooth transitions.
-- 📱 **Responsive Design**  
-  Optimized for desktop browsing and mobile chat.
+* 🔐 **Secure Role-Based Access** - Separate dashboards for artisans and customers
+* ⚡ **Real-time Messaging** - Instant chat powered by WebSockets
+* 🎨 **Glassmorphism UI** - Smooth CSS animations and premium look
+* 📱 **Responsive Design** - Optimized for desktop and mobile browsing
 
 ---
 
 ## 🚀 Quick Start
 
-### ✅ Prerequisites
+### Prerequisites
 
-- Python 3.8+
-- pip
-- Virtual environment (recommended)
+* Python 3.8+
+* pip (Python package manager)
+* Virtual environment (recommended)
 
----
+### Installation
 
-### 📦 Installation
+1. **Clone the repository**
 
 ```bash
 git clone https://github.com/salamlakhan7/bespoke-studio.git
 cd bespoke-studio
-````
+```
+
+2. **Create and activate virtual environment**
 
 ```bash
-python -m venv venv
 # Windows
+python -m venv venv
 venv\Scripts\activate
-# macOS / Linux
+
+# macOS/Linux
+python3 -m venv venv
 source venv/bin/activate
 ```
+
+3. **Install dependencies**
 
 ```bash
 pip install -r requirements.txt
 ```
+
+4. **Run database migrations**
 
 ```bash
 python manage.py makemigrations
 python manage.py migrate
 ```
 
+5. **Create a superuser (admin)**
+
 ```bash
 python manage.py createsuperuser
+```
+
+6. **Run the development server**
+
+```bash
 python manage.py runserver
 ```
 
-📍 Access:
+7. **Access the application**
 
-* App: [http://127.0.0.1:8000](http://127.0.0.1:8000)
-* Admin: [http://127.0.0.1:8000/admin](http://127.0.0.1:8000/admin)
+* Main site: `http://127.0.0.1:8000`
+* Admin panel: `http://127.0.0.1:8000/admin`
 
 ---
 
 ## 📖 Usage Guide
 
-### 👤 Customers
+### For Customers
 
-1. Sign up to access the AI Design Studio.
-2. Enter prompts to generate multiple furniture concepts.
-3. Save selected designs to your vault.
-4. Start negotiations with artisans via real-time chat.
+1. **Sign Up** - Create a customer account
+2. **Generate Designs** - Enter prompts to generate multiple AI furniture concepts
+3. **Save to Vault** - Save favorite designs in the gallery
+4. **Negotiate** - Chat with artisans directly about products or designs
 
----
+### For Artisans
 
-### 🧑‍🎨 Artisans
-
-1. Register as an artisan to access the dashboard.
-2. Upload furniture items and manage stock.
-3. Respond to live customer negotiations.
-4. Finalize deals using contextual product cards.
+1. **Register** - Create an artisan account
+2. **Manage Inventory** - Upload and update furniture items
+3. **Live Chat** - Track and respond to customer negotiations
+4. **Finalize Deals** - Confirm products with contextual chat references
 
 ---
 
-## 🛠 Tech Stack
+## 🛠️ Tech Stack
 
 ### Backend
 
-* **Django 5.2.8**
-* **WebSockets (Django Channels)**
-* **Pollinations AI API** for image generation
-* **SQLite** (local development)
-* **Requests, Pillow**
+* **Django 5.2.8** - Python web framework
+* **SQLite** - Development database
+* **Redis (Optional)** - For real-time channel layers and caching
+* **Pollinations AI API** - Furniture image generation
 
 ### Frontend
 
-* **Tailwind CSS**
-* **HTML5, Vanilla JavaScript**
-* **Font Awesome Icons**
+* **HTML5 & CSS3** - Structure and style
+* **Tailwind CSS** - Modern utility-first styling
+* **JavaScript (ES6+)** - Interactive functionality
+
+### Key Features
+
+* **WebSocket Communication** - Real-time chat
+* **Role-Based Authentication** - Separate dashboards
+* **AI-Driven Design** - Generate furniture concepts dynamically
+* **Responsive UI** - Mobile and desktop optimized
 
 ---
 
 ## 📁 Project Structure
 
-```text
+```
 bespoke-studio/
-├── b_shop/            # Project settings
+├── b_shop/                  # Project configuration
 │   ├── settings.py
 │   ├── urls.py
 │   └── wsgi.py
-├── studio/            # Core application
+├── studio/                  # Main app
+│   ├── templates/           # HTML templates
 │   ├── models.py
 │   ├── views.py
-│   ├── forms.py
-│   └── templates/
-├── contracts/         # Artisan management
-├── media/             # Uploaded images & AI designs
+│   └── forms.py
+├── contracts/               # Artisan dashboard
+├── media/                   # Uploaded designs/images
 ├── manage.py
-└── db.sqlite3
+├── requirements.txt
+└── README.md
 ```
 
 ---
 
-## 🎨 Design Highlights
+## 🎨 Workflow Diagram
 
-### 🧠 AI Design Lab
+### Customer → AI Design → Artisan Chat → Purchase
 
-Each prompt generates multiple unique furniture concepts using non-cached seeds for originality.
+```mermaid
+graph LR
+    A[Customer Signs Up] --> B[Generate AI Furniture Design]
+    B --> C[Save Design to Vault]
+    C --> D[Initiate Chat with Artisan]
+    D --> E[Negotiate Price & Details]
+    E --> F{Purchase Decision}
+    F -->|Proceed to Buy| G[Complete Order]
+    F -->|Cancel| H[Exit]
+    G --> I[Update Artisan Inventory]
+    I --> J[Confirmation & Feedback]
+```
 
-### 🛒 Contextual Negotiation
-
-Every chat includes a reference card ensuring clarity between buyer and artisan.
+> If the diagram doesn’t render, view on GitHub desktop or browser.
 
 ---
 
 ## 🤝 Contributing
 
-Contributions are welcome.
-
-1. Fork the repository
-2. Create a feature branch
-3. Commit your changes
-4. Push and open a Pull Request
+1. Fork the repo
+2. Create a feature branch: `git checkout -b feature/NewFeature`
+3. Commit: `git commit -m 'Add NewFeature'`
+4. Push: `git push origin feature/NewFeature`
+5. Open a Pull Request
 
 ---
 
 ## 📝 License
 
-MIT License
+MIT License – see [LICENSE](LICENSE)
 
 ---
 
-## 👤 Author
+## 👥 Authors
 
-**Abdul Salam**
-Computer Science Graduate
-COMSATS University Islamabad (Vehari Campus)
-GitHub: [https://github.com/salamlakhan7](https://github.com/salamlakhan7)
+* **Abdul Salam** – Initial work – [salamlakhan7](https://github.com/salamlakhan7)
 
 ---
 
 ## 🙏 Acknowledgments
 
-* COMSATS University Islamabad
+* COMSATS University Islamabad (Vehari Campus)
 * Pollinations AI team
 * Tailwind CSS community
 
@@ -212,12 +225,11 @@ GitHub: [https://github.com/salamlakhan7](https://github.com/salamlakhan7)
 
 <div align="center">
 
-**Built with passion using Django and AI**
+**Made with ❤️ using Django & AI**
 
-⭐ Star this repo if you find it useful
+⭐ Star this repo if you find it helpful!
 
 </div>
-```
 
 ---
 
