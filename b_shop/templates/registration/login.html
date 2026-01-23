@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Sign In | Bespoke Studio</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        body { background-color: #0b1120; font-family: 'Plus Jakarta Sans', sans-serif; }
+        .glass-login {
+            background: rgba(255, 255, 255, 0.02);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        .input-box {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            color: white;
+        }
+        .input-box:focus { border-color: #f59e0b; outline: none; }
+    </style>
+</head>
+<body class="min-h-screen flex items-center justify-center p-6">
+
+    <div class="glass-login w-full max-w-md p-10 rounded-[2.5rem] shadow-2xl relative overflow-hidden">
+        <div class="absolute -top-10 -right-10 w-32 h-32 bg-amber-500/20 blur-3xl"></div>
+        
+        <div class="text-center mb-10">
+            <h1 class="text-3xl font-black text-white uppercase tracking-tighter">Welcome <span class="text-amber-500 font-light italic">Back</span></h1>
+            <p class="text-slate-500 text-xs mt-2 uppercase tracking-widest">Enter your credentials to access the studio</p>
+        </div>
+
+        <form method="post" class="space-y-6">
+            {% csrf_token %} <div class="space-y-2">
+                <label class="text-[10px] font-bold text-slate-400 uppercase tracking-widest ml-1">Username</label>
+                <div class="relative">
+                    <i class="fas fa-user absolute left-4 top-4 text-slate-500 text-sm"></i>
+                    <input type="text" name="username" class="input-box w-full pl-12 pr-4 py-4 rounded-xl text-sm" placeholder="salamlakhan7">
+                </div>
+            </div>
+
+            <div class="space-y-2">
+                <label class="text-[10px] font-bold text-slate-400 uppercase tracking-widest ml-1">Password</label>
+                <div class="relative">
+                    <i class="fas fa-lock absolute left-4 top-4 text-slate-500 text-sm"></i>
+                    <input type="password" name="password" class="input-box w-full pl-12 pr-4 py-4 rounded-xl text-sm" placeholder="••••••••">
+                </div>
+            </div>
+
+            <button type="submit" class="w-full py-4 bg-amber-600 hover:bg-amber-500 text-slate-900 font-black rounded-xl transition-all shadow-lg shadow-amber-600/20 uppercase tracking-widest text-xs mt-4">
+                Sign Into Studio
+            </button>
+        </form>
+
+        <div class="mt-8 text-center">
+            <p class="text-slate-500 text-xs uppercase tracking-widest">Don't have an account?</p>
+            <a href="/signup" class="text-amber-500 font-bold text-sm hover:underline mt-1 inline-block">Create New Account</a>
+        </div>
+    </div>
+
+</body>
+</html>

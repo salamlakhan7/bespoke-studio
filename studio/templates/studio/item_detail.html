@@ -1,0 +1,126 @@
+{% extends 'studio/base.html' %}
+
+{% block content %}
+<div class="p-8 bg-[#0b1120] min-h-screen text-white">
+    <nav class="mb-12 text-[10px] uppercase tracking-[0.3em] text-slate-500 font-bold">
+        <a href="{% url 'public_showroom' %}" class="hover:text-amber-500 transition-colors">Showroom</a> 
+        <span class="mx-3">/</span> 
+        <span class="text-amber-500">{{ item.title }}</span>
+    </nav>
+
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-16 max-w-7xl mx-auto">
+        
+        <div class="lg:col-span-7 space-y-8">
+            <div class="glass-panel rounded-[2rem] overflow-hidden border border-white/10 shadow-2xl group">
+                <img src="{{ item.image.url }}" alt="{{ item.title }}" 
+                     class="w-full h-full object-cover transform transition-transform duration-1000 group-hover:scale-105">
+            </div>
+            
+            <div class="grid grid-cols-2 gap-4">
+                <button onclick="copyItemURL()" class="group bg-white/5 border border-white/10 py-5 rounded-2xl flex items-center justify-center gap-3 hover:bg-white/10 transition-all duration-300">
+                    <i class="fas fa-link text-amber-500 group-hover:rotate-45 transition-transform"></i>
+                    <span class="text-[10px] font-black uppercase tracking-widest">Copy Item URL</span>
+                </button>
+
+                <button onclick="saveToVault(this, '{{ item.image.url }}', '{{ item.title }}')" 
+                        class="group bg-white/5 border border-white/10 py-5 rounded-2xl flex items-center justify-center gap-3 hover:bg-red-500/10 hover:border-red-500/30 transition-all duration-300">
+                    <i class="fas fa-heart text-slate-500 group-hover:text-red-500 transition-colors"></i>
+                    <span class="text-[10px] font-black uppercase tracking-widest">Save to Vault</span>
+                </button>
+            </div>
+        </div>
+
+        <div class="lg:col-span-5 space-y-10">
+            <div>
+                <h1 class="text-6xl font-black uppercase tracking-tighter leading-none mb-4">{{ item.title }}</h1>
+                <div class="flex items-center gap-4">
+                    <span class="text-3xl font-light text-amber-500 tracking-tighter">${{ item.price }}</span>
+                    <span class="px-3 py-1 bg-green-500/10 text-green-400 text-[10px] font-black uppercase tracking-widest border border-green-500/20 rounded-lg">
+                        {% if item.is_available %}In Stock{% else %}Sold Out{% endif %}
+                    </span>
+                </div>
+            </div>
+
+            <div class="glass-panel p-8 rounded-3xl border border-white/5 relative overflow-hidden">
+                <div class="absolute top-0 left-0 w-1 h-full bg-amber-500"></div>
+                <h3 class="text-[10px] font-black uppercase tracking-[0.2em] text-amber-500 mb-4">Item Specifications</h3>
+                <p class="text-slate-400 text-sm leading-relaxed font-medium">{{ item.description }}</p>
+            </div>
+
+            <div class="grid grid-cols-2 gap-4">
+                {% for label, value in company_stats.items %}
+                <div class="bg-white/5 border border-white/5 p-5 rounded-2xl text-center">
+                    <p class="text-[9px] uppercase tracking-widest text-slate-600 font-black mb-1">{{ label }}</p>
+                    <p class="text-lg font-black text-white uppercase">{{ value }}</p>
+                </div>
+                {% endfor %}
+            </div>
+
+            <div class="pt-6">
+                <a href="{% url 'negotiation_page' %}?item_id={{ item.id }}&img={{ item.image.url|urlencode }}&prompt={{ item.title|urlencode }}" 
+                   class="block w-full bg-amber-500 text-black text-center py-6 rounded-2xl font-black uppercase tracking-[0.2em] text-xs hover:bg-amber-400 transition-all transform hover:-translate-y-1 shadow-[0_20px_40px_rgba(245,158,11,0.2)]">
+                    <i class="fas fa-comments mr-2"></i> Start Negotiation
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    function copyItemURL() {
+        const dummy = document.createElement('input');
+        const text = window.location.href;
+        document.body.appendChild(dummy);
+        dummy.value = text;
+        dummy.select();
+        document.execCommand('copy');
+        document.body.removeChild(dummy);
+        
+        const btn = event.currentTarget;
+        const originalText = btn.innerHTML;
+        btn.innerHTML = '<i class="fas fa-check text-green-500"></i> <span class="text-[10px] font-black uppercase tracking-widest">Copied!</span>';
+        setTimeout(() => { btn.innerHTML = originalText; }, 2000);
+    }
+
+    function saveToVault(btn, imgUrl, itemTitle) {
+        const icon = btn.querySelector('i');
+        const span = btn.querySelector('span');
+        const originalIcon = icon.className;
+        
+        // Loading state
+        icon.className = 'fas fa-circle-notch fa-spin text-amber-500';
+
+        fetch("{% url 'save_to_vault' %}", {
+            method: "POST",
+            headers: {
+                "X-CSRFToken": "{{ csrf_token }}",
+                "Content-Type": "application/x-www-form-urlencoded",
+            },
+            body: new URLSearchParams({
+                'img_base64': imgUrl,
+                'prompt': itemTitle
+            })
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.status === 'success') {
+                icon.className = 'fas fa-check text-green-500';
+                span.innerText = 'Saved in Vault';
+                btn.classList.add('border-green-500/30');
+                btn.style.pointerEvents = 'none';
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            icon.className = originalIcon;
+        });
+    }
+</script>
+
+<style>
+    .glass-panel {
+        background: rgba(255, 255, 255, 0.02);
+        backdrop-filter: blur(20px);
+    }
+</style>
+{% endblock %}

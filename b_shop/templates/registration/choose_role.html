@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        body { background-color: #0b1120; font-family: 'Plus Jakarta Sans', sans-serif; }
+        .role-card {
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(15px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+        .role-card:hover {
+            transform: scale(1.05);
+            border-color: #f59e0b;
+            background: rgba(255, 255, 255, 0.07);
+        }
+    </style>
+</head>
+<body class="min-h-screen flex items-center justify-center p-10">
+    <div class="max-w-4xl w-full grid md:grid-cols-2 gap-8">
+        
+        <a href="/signup/customer" class="role-card p-10 rounded-[3rem] text-center group">
+            <div class="w-20 h-20 bg-amber-500/10 rounded-3xl flex items-center justify-center mx-auto mb-6 group-hover:bg-amber-500 transition-colors">
+                <i class="fas fa-magic text-3xl text-amber-500 group-hover:text-slate-900"></i>
+            </div>
+            <h2 class="text-2xl font-black text-white uppercase tracking-tighter">I am a <br><span class="text-amber-500">Customer</span></h2>
+            <p class="text-slate-500 text-sm mt-4 uppercase tracking-widest leading-loose">Use AI to design, visualize wood quality, and negotiate deals.</p>
+        </a>
+
+        <a href="/signup/artisan" class="role-card p-10 rounded-[3rem] text-center group">
+            <div class="w-20 h-20 bg-blue-500/10 rounded-3xl flex items-center justify-center mx-auto mb-6 group-hover:bg-blue-500 transition-colors">
+                <i class="fas fa-hammer text-3xl text-blue-500 group-hover:text-white"></i>
+            </div>
+            <h2 class="text-2xl font-black text-white uppercase tracking-tighter">I am the <br><span class="text-blue-500">Shop Owner</span></h2>
+            <p class="text-slate-500 text-sm mt-4 uppercase tracking-widest leading-loose">Manage proposals, evaluate AI specs, and close contracts.</p>
+        </a>
+
+    </div>
+</body>
+</html>

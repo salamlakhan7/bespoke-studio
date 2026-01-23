@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact the Artisan | Bespoke Studio</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600;800&display=swap');
+        body { font-family: 'Plus Jakarta Sans', sans-serif; background-color: #0b1120; }
+        
+        .contact-glass {
+            background: rgba(255, 255, 255, 0.02);
+            backdrop-filter: blur(15px);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            transition: all 0.4s ease;
+        }
+
+        .input-field {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .input-field:focus {
+            border-color: #f59e0b;
+            background: rgba(255, 255, 255, 0.07);
+            outline: none;
+            box-shadow: 0 0 15px rgba(245, 158, 11, 0.2);
+        }
+
+        .map-glow {
+            box-shadow: 0 0 50px rgba(245, 158, 11, 0.1);
+        }
+    </style>
+</head>
+<body class="text-slate-300">
+
+    <nav class="p-6 border-b border-white/5">
+        <div class="max-w-7xl mx-auto flex justify-between items-center">
+            <a href="/" class="text-xl font-black uppercase tracking-tighter text-white">
+                Bespoke<span class="text-amber-500">Studio</span>
+            </a>
+            <a href="/" class="text-[10px] font-bold uppercase tracking-[0.3em] hover:text-amber-500 transition">Back to Home</a>
+        </div>
+    </nav>
+
+    <main class="max-w-7xl mx-auto px-6 py-20 grid md:grid-cols-2 gap-16 items-start">
+        
+        <div class="space-y-12">
+            <div>
+                <span class="text-amber-500 font-mono tracking-[0.4em] uppercase text-xs mb-4 block">The Studio Bridge</span>
+                <h1 class="text-5xl md:text-7xl font-extrabold text-white leading-tight tracking-tighter">
+                    Let's Build <br><span class="italic font-light">Your Legacy.</span>
+                </h1>
+                <p class="text-slate-400 mt-6 text-lg leading-relaxed max-w-md">
+                    Ready to turn an AI design into a physical masterpiece? Contact our single-artisan studio to discuss wood types, pricing, and timelines.
+                </p>
+            </div>
+
+            <div class="grid gap-6">
+                <div class="contact-glass p-6 rounded-2xl flex items-center gap-6 group hover:bg-white/5">
+                    <div class="w-12 h-12 bg-amber-500/10 rounded-xl flex items-center justify-center text-amber-500 group-hover:scale-110 transition">
+                        <i class="fas fa-map-marker-alt text-xl"></i>
+                    </div>
+                    <div>
+                        <h4 class="text-white font-bold text-sm uppercase tracking-widest">Location</h4>
+                        <p class="text-slate-500 text-sm italic">Ghotki, Pakistan</p>
+                    </div>
+                </div>
+
+                <div class="contact-glass p-6 rounded-2xl flex items-center gap-6 group hover:bg-white/5">
+                    <div class="w-12 h-12 bg-blue-500/10 rounded-xl flex items-center justify-center text-blue-500 group-hover:scale-110 transition">
+                        <i class="fas fa-paper-plane text-xl"></i>
+                    </div>
+                    <div>
+                        <h4 class="text-white font-bold text-sm uppercase tracking-widest">Digital Hub</h4>
+                        <p class="text-slate-500 text-sm">salamlakhan7@github.com</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="contact-glass p-10 rounded-[3rem] relative overflow-hidden">
+            <div class="absolute top-0 right-0 w-32 h-32 bg-amber-500/10 blur-3xl -z-10"></div>
+            
+            <h3 class="text-2xl font-bold text-white mb-8">Inquiry Form</h3>
+            
+            <form class="space-y-6">
+                <div class="grid grid-cols-2 gap-6">
+                    <div class="space-y-2">
+                        <label class="text-[10px] font-bold uppercase tracking-widest text-slate-500">Name</label>
+                        <input type="text" placeholder="Abdul Salam" class="input-field w-full px-5 py-4 rounded-xl text-white text-sm">
+                    </div>
+                    <div class="space-y-2">
+                        <label class="text-[10px] font-bold uppercase tracking-widest text-slate-500">Email</label>
+                        <input type="email" placeholder="email@example.com" class="input-field w-full px-5 py-4 rounded-xl text-white text-sm">
+                    </div>
+                </div>
+
+                <div class="space-y-2">
+                    <label class="text-[10px] font-bold uppercase tracking-widest text-slate-500">Inquiry Type</label>
+                    <select class="input-field w-full px-5 py-4 rounded-xl text-slate-400 text-sm appearance-none">
+                        <option>Initiate Design Session</option>
+                        <option>Wood Quality Consultation</option>
+                        <option>Project Timeline Update</option>
+                    </select>
+                </div>
+
+                <div class="space-y-2">
+                    <label class="text-[10px] font-bold uppercase tracking-widest text-slate-500">Message</label>
+                    <textarea rows="4" placeholder="Describe your vision..." class="input-field w-full px-5 py-4 rounded-xl text-white text-sm resize-none"></textarea>
+                </div>
+
+                <button class="w-full py-5 bg-amber-600 hover:bg-amber-500 text-slate-900 font-black rounded-xl transition-all shadow-xl shadow-amber-600/20 uppercase tracking-widest text-xs flex items-center justify-center gap-3 group">
+                    Send Proposal <i class="fas fa-arrow-right group-hover:translate-x-2 transition"></i>
+                </button>
+            </form>
+        </div>
+    </main>
+
+    <section class="max-w-7xl mx-auto px-6 pb-20">
+        <div class="w-full h-64 bg-slate-900 rounded-[2rem] border border-white/5 flex items-center justify-center relative overflow-hidden map-glow">
+            <div class="absolute inset-0 opacity-20 bg-[url('https://www.transparenttextures.com/patterns/carbon-fibre.png')]"></div>
+            <div class="text-center relative z-10">
+                <div class="w-16 h-16 bg-amber-500 rounded-full flex items-center justify-center mx-auto mb-4 animate-pulse shadow-lg shadow-amber-500/50">
+                    <i class="fas fa-hammer text-slate-900 text-2xl"></i>
+                </div>
+                <h5 class="text-white font-bold uppercase tracking-tighter">The Workshop</h5>
+                <p class="text-[10px] text-slate-500 uppercase tracking-[0.3em]">Ghotki, Pakistan</p>
+            </div>
+        </div>
+    </section>
+
+</body>
+</html>

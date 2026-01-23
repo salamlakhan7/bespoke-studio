@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DesignLab | Bespoke Studio</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        body {
+            background-color: #0b1120;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            color: white;
+        }
+
+        .glass-panel {
+            background: rgba(255, 255, 255, 0.02);
+            backdrop-filter: blur(15px);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .sidebar-link:hover {
+            background: rgba(255, 255, 255, 0.05);
+            color: #f59e0b;
+        }
+    </style>
+</head>
+
+<body class="min-h-screen flex">
+
+    <aside class="w-64 border-r border-white/10 p-6 flex flex-col glass-panel sticky top-0 h-screen">
+        <div class="mb-10">
+            <h1 class="text-2xl font-black uppercase tracking-tighter">Design<span class="text-amber-500">Lab</span>
+            </h1>
+            <span class="text-[10px] bg-amber-500/10 text-amber-500 px-2 py-0.5 rounded font-bold">CUSTOMER MODE</span>
+        </div>
+
+        <nav class="flex-1 space-y-2">
+            <p class="text-[10px] font-bold text-slate-500 uppercase tracking-widest mb-4">Your Studio</p>
+
+            <a href="{% url 'public_showroom' %}"
+                class="sidebar-link flex items-center gap-3 p-3 rounded-xl transition {% if request.resolver_match.url_name == 'public_showroom' %}bg-amber-500/10 text-amber-500 font-bold{% else %}text-slate-400{% endif %}">
+                <i class="fas fa-couch"></i> Showroom
+            </a>
+
+            <a href="{% url 'customer_dashboard' %}"
+                class="sidebar-link flex items-center gap-3 p-3 rounded-xl transition text-slate-400">
+                <i class="fas fa-magic"></i> New Design
+            </a>
+
+            <a href="{% url 'saved_concepts' %}"
+                class="sidebar-link flex items-center gap-3 p-3 rounded-xl transition text-slate-400">
+                <i class="fas fa-folder"></i> Saved Concepts
+            </a>
+
+            <a href="{% url 'negotiation_page' %}"
+                class="sidebar-link flex items-center gap-3 p-3 rounded-xl transition text-slate-400">
+                <i class="fas fa-comments"></i> Negotiations
+            </a>
+        </nav>
+
+        <div class="mt-auto pt-6 border-t border-white/10">
+            <div class="flex items-center gap-3 mb-4 p-2">
+                <div
+                    class="w-8 h-8 rounded-full bg-amber-500 flex items-center justify-center text-black font-bold text-xs">
+                    {{ user.username|slice:":1"|upper }}
+                </div>
+                <div class="text-xs">
+                    <p class="font-bold text-white">{{ user.username }}</p>
+                    <p class="text-slate-500">Customer</p>
+                </div>
+            </div>
+            <a href="{% url 'logout' %}" class="text-xs text-rose-500 hover:text-rose-400 flex items-center gap-2 px-2">
+                <i class="fas fa-sign-out-alt"></i> Logout
+            </a>
+        </div>
+    </aside>
+
+    <main class="flex-1 overflow-y-auto bg-[#0b1120]">
+        {% block content %}
+        {% endblock %}
+    </main>
+
+</body>
+
+</html>

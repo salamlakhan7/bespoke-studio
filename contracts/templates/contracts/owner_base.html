@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Artisan Portal | Bespoke Studio</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        body {
+            background-color: #020617;
+            color: #f8fafc;
+            font-family: 'Inter', sans-serif;
+        }
+
+        .glass-panel {
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(10px);
+        }
+
+        .artisan-gradient {
+            background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+        }
+    </style>
+</head>
+
+<body class="h-screen flex overflow-hidden">
+
+    <aside class="w-64 border-r border-white/5 bg-black/40 flex flex-col z-50">
+        <div class="p-8">
+            <div class="flex items-center gap-2 mb-2">
+                <span class="text-2xl font-black tracking-tighter uppercase">Design<span
+                        class="text-amber-500">Lab</span></span>
+            </div>
+            <div
+                class="inline-block px-2 py-1 artisan-gradient rounded text-[10px] font-black text-black uppercase tracking-widest">
+                Artisan Mode
+            </div>
+        </div>
+
+        <nav class="flex-1 px-4 space-y-2">
+            <a href="{% url 'owner_dashboard' %}"
+                class="flex items-center gap-3 px-4 py-3 rounded-xl {% if request.resolver_match.url_name == 'owner_dashboard' %}bg-amber-500 text-black font-bold{% else %}text-slate-400 hover:bg-white/5 hover:text-white{% endif %} transition">
+                <i class="fas fa-th-large"></i>
+                <span class="text-sm">Command Center</span>
+            </a>
+            <a href="{% url 'manage_inventory' %}"
+                class="flex items-center gap-3 px-4 py-3 rounded-xl {% if request.resolver_match.url_name == 'manage_inventory' %}bg-amber-500 text-black font-bold{% else %}text-slate-400 hover:bg-white/5 hover:text-white{% endif %} transition">
+                <i class="fas fa-box"></i>
+                <span class="text-sm">My Inventory</span>
+            </a>
+            <a href="{% url 'negotiation_page' %}"
+                class="flex items-center gap-3 px-4 py-3 rounded-xl {% if request.resolver_match.url_name == 'negotiation_page' %}bg-amber-500 text-black font-bold{% else %}text-slate-400 hover:bg-white/5 hover:text-white{% endif %} transition">
+                <i class="fas fa-comments"></i>
+                <span class="text-sm">Negotiations</span>
+                {% if unread_count %}
+                <span class="ml-auto bg-red-500 text-white text-[10px] px-1.5 py-0.5 rounded-full">{{ unread_count
+                    }}</span>
+                {% endif %}
+            </a>
+
+
+        </nav>
+
+        <div class="p-4 border-t border-white/5">
+            <div class="glass-panel p-4 rounded-2xl flex items-center gap-3">
+                <div
+                    class="w-10 h-10 rounded-full artisan-gradient flex items-center justify-center text-black font-bold">
+                    {{ user.username|slice:":1"|upper }}
+                </div>
+                <div class="overflow-hidden">
+                    <p class="text-xs font-bold text-white truncate">{{ user.username }}</p>
+                    <p class="text-[10px] text-slate-500 uppercase font-black">Master Artisan</p>
+                </div>
+            </div>
+            <form method="post" action="{% url 'logout' %}" class="mt-4">
+                {% csrf_token %}
+                <button type="submit"
+                    class="w-full text-left px-4 py-2 text-xs text-rose-500 hover:bg-rose-500/10 rounded-lg transition">
+                    <i class="fas fa-sign-out-alt mr-2"></i> Logout
+                </button>
+            </form>
+        </div>
+    </aside>
+
+    <main class="flex-1 overflow-y-auto relative">
+        {% block content %}{% endblock %}
+    </main>
+
+</body>
+
+</html>

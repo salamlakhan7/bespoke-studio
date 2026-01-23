@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        body { background-color: #0b1120; font-family: 'Plus Jakarta Sans', sans-serif; color: white; }
+        .glass-panel { background: rgba(255, 255, 255, 0.02); backdrop-filter: blur(15px); border: 1px solid rgba(255, 255, 255, 0.05); }
+    </style>
+</head>
+<body class="min-h-screen flex items-center justify-center p-6">
+    <div class="max-w-md w-full space-y-8 p-10 glass-panel rounded-3xl border border-white/10 shadow-2xl">
+        <div class="text-center">
+            <h1 class="text-3xl font-black uppercase tracking-tighter">Design<span class="text-amber-500">Lab</span></h1>
+            <h2 class="mt-4 text-xl font-bold">Artisan Registration</h2>
+            <p class="text-slate-500 text-sm">Join the studio as a Master Furniture Maker.</p>
+        </div>
+
+        <form method="POST" class="mt-8 space-y-6">
+            {% csrf_token %}
+            <div class="space-y-4">
+                {% for field in form %}
+                <div>
+                    <label class="block text-xs font-bold uppercase tracking-widest text-slate-400 mb-2">{{ field.label }}</label>
+                    <div class="relative">
+                        <input type="{{ field.field.widget.input_type|default:'text' }}" 
+                               name="{{ field.name }}" 
+                               class="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-white focus:border-amber-500 outline-none transition"
+                               required>
+                    </div>
+                    {% if field.errors %}
+                        <p class="text-rose-500 text-xs mt-1">{{ field.errors.0 }}</p>
+                    {% endif %}
+                </div>
+                {% endfor %}
+            </div>
+
+            <button type="submit" class="w-full bg-amber-600 hover:bg-amber-500 text-slate-900 py-4 rounded-xl font-black transition-all transform hover:scale-[1.02]">
+                Create Artisan Account
+            </button>
+        </form>
+
+        <div class="text-center text-sm">
+            <a href="{% url 'login' %}" class="text-slate-500 hover:text-white transition underline">Already have an account? Login</a>
+        </div>
+    </div>
+</body>
+</html>

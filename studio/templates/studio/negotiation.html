@@ -1,0 +1,167 @@
+{% extends user.is_artisan|yesno:"contracts/owner_base.html,studio/base.html" %}
+
+{% block content %}
+<div class="flex h-[calc(100vh-64px)] overflow-hidden">
+    <main class="flex-1 flex flex-col relative bg-[#0b1120]">
+        <div class="p-4 border-b border-white/5 glass-panel flex justify-between items-center bg-black/20">
+            <div class="flex items-center gap-3">
+                <div class="w-10 h-10 rounded-full bg-amber-500 flex items-center justify-center text-black font-bold shadow-lg">
+                    {{ chat_partner.username|slice:":1"|upper }}
+                </div>
+                <div>
+                    <h3 class="font-bold text-white">{{ chat_partner.username }}</h3>
+                    <p class="text-[10px] text-slate-500 uppercase tracking-widest font-black">
+                        {% if user.is_artisan %}Customer{% else %}Master Artisan{% endif %}
+                    </p>
+                </div>
+            </div>
+            <div class="flex flex-col items-end">
+                <span class="text-[10px] text-amber-500/50 font-mono">ROOM_ID: {{ room_id }}</span>
+                <div class="flex items-center gap-1.5 mt-0.5">
+                    <div class="w-1.5 h-1.5 bg-green-500 rounded-full animate-pulse"></div>
+                    <span class="text-[9px] text-slate-500 font-bold uppercase tracking-tighter">Secure Sync</span>
+                </div>
+            </div>
+        </div>
+
+        {% if referenced_item or item_name %}
+        <div class="mx-6 mt-4 p-4 rounded-xl bg-amber-500/10 border border-amber-500/20 flex items-center justify-between animate-in fade-in slide-in-from-top-4 duration-500">
+            <div class="flex items-center gap-4">
+                <div class="relative group">
+                    <img src="{% if referenced_item %}{{ referenced_item.image.url }}{% else %}{{ item_image }}{% endif %}" 
+                         class="w-14 h-14 rounded-lg object-cover border border-amber-500/30 shadow-2xl">
+                    <div class="absolute inset-0 bg-black/40 rounded-lg opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+                        <i class="fas fa-search-plus text-white text-xs"></i>
+                    </div>
+                </div>
+                <div>
+                    <p class="text-[10px] uppercase tracking-[0.2em] text-amber-500 font-bold">Inquiry Regarding</p>
+                    <h4 class="text-white font-bold text-sm uppercase">
+                        {% if referenced_item %}{{ referenced_item.title }}{% else %}{{ item_name }}{% endif %}
+                    </h4>
+                    
+                    {% if referenced_item %}
+                        <p class="text-[10px] text-slate-400 font-medium">Market Price: ${{ referenced_item.price }}</p>
+                    {% elif price %}
+                        <p class="text-[10px] text-slate-400 font-medium">Est. Value: ${{ price }}</p>
+                    {% else %}
+                        <p class="text-[10px] text-slate-500 italic">Custom AI Specification</p>
+                    {% endif %}
+                </div>
+            </div>
+            <div class="hidden sm:block text-right">
+                <span class="text-[10px] bg-white/5 text-slate-400 px-3 py-1.5 rounded-full border border-white/10 font-bold">
+                    {% if referenced_item %}INVENTORY REF: #{{ referenced_item.id }}{% else %}AI DESIGN VAULT{% endif %}
+                </span>
+                {% if referenced_item %}
+                <div class="mt-2">
+                    <span class="text-[9px] font-black uppercase tracking-widest {% if referenced_item.is_available %}text-green-500{% else %}text-red-500{% endif %}">
+                        ● {% if referenced_item.is_available %}Available{% else %}Reserved{% endif %}
+                    </span>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+        {% endif %}
+
+        <div id="chat-log" class="flex-1 p-6 overflow-y-auto space-y-6 flex flex-col custom-scrollbar">
+            {% for msg in chat_history %}
+            <div class="flex flex-col {% if msg.sender == user %}items-end self-end ml-auto{% else %}items-start{% endif %} max-w-[75%]">
+                <div class="{% if msg.sender == user %}bg-amber-500 text-black font-semibold shadow-amber-500/10{% else %}bg-white/5 border border-white/10 text-slate-300 shadow-lg{% endif %} p-4 rounded-2xl text-sm">
+                    {% if msg.text %}
+                        <p class="leading-relaxed">{{ msg.text|linebreaksbr }}</p>
+                    {% endif %}
+                </div>
+                <span class="text-[10px] text-slate-600 mt-2 px-1 font-bold">{{ msg.timestamp|date:"H:i" }}</span>
+            </div>
+            {% endfor %}
+        </div>
+
+        <div class="p-6 glass-panel border-t border-white/5 bg-black/20">
+            <form id="chat-form" class="flex items-center gap-4">
+                <div class="flex-1 relative">
+                    <input id="chat-input" type="text" 
+                        {% if not user.is_artisan and referenced_item %}
+                            value="I'd like to discuss the price for the {{ referenced_item.title }}."
+                        {% elif not user.is_artisan and item_name %}
+                            value="I'd like to discuss building this: {{ item_name }}"
+                        {% endif %}
+                        placeholder="Type your message or share a vision..." autocomplete="off"
+                        class="w-full bg-white/5 border border-white/10 rounded-xl px-5 py-4 text-sm text-white outline-none focus:border-amber-500 transition-all placeholder:text-slate-600 shadow-inner">
+                </div>
+                <button type="submit" class="bg-amber-500 text-black w-14 h-14 rounded-xl flex items-center justify-center hover:bg-amber-400 transition-all shadow-xl active:scale-90">
+                    <i class="fas fa-paper-plane text-lg"></i>
+                </button>
+            </form>
+        </div>
+    </main>
+</div>
+
+<script>
+    const roomName = "{{ room_id }}";
+    const chatSocket = new WebSocket(
+        (window.location.protocol === 'https:' ? 'wss://' : 'ws://') + 
+        window.location.host + 
+        '/ws/chat/' + roomName + '/'
+    );
+
+    const chatLog = document.querySelector('#chat-log');
+    const chatInput = document.querySelector('#chat-input');
+    const chatForm = document.querySelector('#chat-form');
+
+    function scrollToBottom() { 
+        chatLog.scrollTop = chatLog.scrollHeight; 
+    }
+    scrollToBottom();
+
+    chatSocket.onmessage = function (e) {
+        const data = JSON.parse(e.data);
+        if (data.action === "receive") {
+            const isMe = data.sender === "{{ user.username }}";
+            const msgWrapper = document.createElement('div');
+            msgWrapper.className = isMe ? 
+                'flex flex-col items-end self-end max-w-[75%] ml-auto' : 
+                'flex flex-col items-start max-w-[75%]';
+
+            const msgBubble = document.createElement('div');
+            msgBubble.className = isMe ? 
+                'bg-amber-500 p-4 rounded-2xl text-sm text-black font-semibold shadow-lg shadow-amber-500/10' : 
+                'bg-white/5 border border-white/10 p-4 rounded-2xl text-sm text-slate-300 shadow-lg';
+
+            msgBubble.innerHTML = `<p class="leading-relaxed">${data.content}</p>`;
+            const meta = document.createElement('span');
+            meta.className = 'text-[10px] text-slate-600 mt-2 px-1 font-bold';
+            meta.innerText = `${data.sender} • ${data.timestamp}`;
+
+            msgWrapper.appendChild(msgBubble);
+            msgWrapper.appendChild(meta);
+            chatLog.appendChild(msgWrapper);
+            scrollToBottom(); 
+        }
+    };
+
+    chatForm.onsubmit = function (e) {
+        e.preventDefault();
+        const message = chatInput.value.trim();
+        if (message !== "" && chatSocket.readyState === WebSocket.OPEN) {
+            chatSocket.send(JSON.stringify({
+                'action': 'send',
+                'message': message
+            }));
+            chatInput.value = '';
+        }
+    };
+
+    chatSocket.onclose = function(e) {
+        console.error('Bespoke Sync Lost. Verify Memurai Service.');
+    };
+</script>
+
+<style>
+    .custom-scrollbar::-webkit-scrollbar { width: 5px; }
+    .custom-scrollbar::-webkit-scrollbar-track { background: transparent; }
+    .custom-scrollbar::-webkit-scrollbar-thumb { background: rgba(245, 158, 11, 0.15); border-radius: 20px; }
+    .custom-scrollbar::-webkit-scrollbar-thumb:hover { background: rgba(245, 158, 11, 0.3); }
+    .glass-panel { background: rgba(255, 255, 255, 0.03); backdrop-filter: blur(12px); }
+</style>
+{% endblock %}
