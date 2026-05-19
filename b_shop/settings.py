@@ -68,12 +68,22 @@ WSGI_APPLICATION = 'b_shop.wsgi.application'
 ASGI_APPLICATION = 'b_shop.asgi.application' # Required for Channels
 
 # --- 🗄️ DATABASE CONFIGURATION (POSTGRES + SQLITE) ---
-DATABASES = {
-    'default': dj_database_url.config(
-        default=f"sqlite:///{BASE_DIR / 'db.sqlite3'}",
-        conn_max_age=600
-    )
-}
+DATABASE_URL = os.getenv('DATABASE_URL')
+
+if DATABASE_URL:
+    DATABASES = {
+        'default': dj_database_url.config(
+            default=DATABASE_URL,
+            conn_max_age=600
+        )
+    }
+else:
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.sqlite3',
+            'NAME': BASE_DIR / 'db.sqlite3',
+        }
+    }
 
 # --- 🚀 REDIS CONFIGURATION FOR CHANNELS ---
 CHANNEL_LAYERS = {
