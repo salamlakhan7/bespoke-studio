@@ -31,7 +31,7 @@ def signup_customer(request):
             return redirect('customer_dashboard')
     else:
         form = CustomerSignUpForm()
-    return render(request, 'registration/signup_customer.html', {'form': form})
+    return render(request, 'registration/signup.html', {'form': form})
 
 def signup_artisan(request):
     if request.method == 'POST':
