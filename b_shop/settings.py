@@ -14,6 +14,7 @@ DEBUG = os.getenv("DEBUG", "True") == "True"
 
 # Secure Host Configuration: This resolves the DisallowedHost error
 ALLOWED_HOSTS = os.getenv("ALLOWED_HOSTS", "127.0.0.1,localhost").split(",")
+CSRF_TRUSTED_ORIGINS = ['https://bespoke-studio.onrender.com']
 # --------------------------------------------
 
 INSTALLED_APPS = [
